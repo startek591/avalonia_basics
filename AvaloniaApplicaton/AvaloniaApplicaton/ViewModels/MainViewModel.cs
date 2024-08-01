@@ -1,8 +1,35 @@
-﻿namespace AvaloniaApplicaton.ViewModels;
+﻿using ReactiveUI;
+using System.Reactive;
+using System.Windows.Input;
+using System.Reactive.Disposables;
 
-public class MainViewModel : ViewModelBase
+namespace AvaloniaApplicaton.ViewModels;
+
+public class MainViewModel : ViewModelBase, IActivatableViewModel
 {
-#pragma warning disable CA1822 // Mark members as static
-    public string Greeting => "Welcome to Avalonia!";
-#pragma warning restore CA1822 // Mark members as static
+    public ViewModelActivator Activator { get; }
+    private string? _textBlockName = "Welcome to MammaMiaDev";
+
+    public MainViewModel()
+    {
+        Activator = new ViewModelActivator();
+        ButtonOnClickCommand = ReactiveCommand.Create(ButtonOnClick);
+    }
+
+    public string? TextBlockName
+    {
+        get => _textBlockName;
+        set
+        {
+            this.RaiseAndSetIfChanged(ref _textBlockName, value);
+        }
+    }
+
+    public ICommand ButtonOnClickCommand { get; }
+
+    private void ButtonOnClick()
+    {
+        TextBlockName = "CLICKED";
+    }
+
 }
