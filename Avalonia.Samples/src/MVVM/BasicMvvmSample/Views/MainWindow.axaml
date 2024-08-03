@@ -15,4 +15,12 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
+    <StackPanel DataContext="{Binding ReactiveViewModel}" Spacing="10">
+        <TextBlock>Enter your Name:</TextBlock>
+        <TextBox x:Name="FirstName" Text="{Binding Name}" />
+        <TextBox x:Name="Greeting" Text="{Binding Greeting, Mode=OneWay}"
+                            IsReadOnly="True"
+                            FontWeight="Bold" />
+    </StackPanel>
+
 </Window>
