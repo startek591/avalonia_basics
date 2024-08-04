@@ -14,6 +14,51 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
+
+    <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="Auto, *">
+        <TextBlock x:Name="CommandText" Grid.Column="0" Grid.Row="0"
+                            Text="Command:"
+                            FontWeight="Bold"
+                            VerticalAlignment="Center"
+                            Margin="5" />
+        <StackPanel Grid.Column="1" Grid.Row="0" Spacing="5" Margin="5">
+            <Button x:Name="OpenThePodBayDoorBtn"  Content="Open the pod bay doors, HAL." />
+
+            <StackPanel Orientation="Horizontal" Spacing="5">
+                <TextBox x:Name="RobotName" Text="{Binding RobotName}" Watermark="Robot Name" />
+                <Button x:Name="OpenThePodBayDoorFellowRobotBtn" Command="{Binding OpenThePodBayDoorsFellowRobotCommand}"
+                        Content="{Binding RobotName, StringFormat='Open the Pod Bay for {0}'}"
+                        CommandParameter="{Binding RobotName}" />
+            </StackPanel>
+
+            <Button x:Name="OpenThePodBayDoorAsyncBtn"  Command="{Binding OpenThePodBayDoorsAsyncCommand}" Content="Start Pod Bay Opening Sequence" />
+        </StackPanel>
+
+        <Separator Grid.Row="1" Grid.ColumnSpan="2"
+                            HorizontalAlignment="Stretch"
+                            Margin="5"
+                            Height="2"
+                            Background="LightGray" />
+
+        <Border Grid.Column="1" Grid.Row="2" CornerRadius="10" Margin="5" BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColor}">
+            <Grid ColumnDefinitions="*,Auto">
+                <ItemsControl x:Name="ConversationLog" Margin="5" ItemsSource="{Binding ConversationLog}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <Button x:Name="ConversationClearBtn" Grid.Column="1" 
+                                VerticalAlignment="Stretch" VerticalContentAlignment="Center"
+                                Background="Transparent"
+                                Command="{Binding ConversationLog.Clear}"
+                                Content="❌" />
+                
+            </Grid>
+        </Border>
+        
+    </Grid>
     
 
 </Window>
